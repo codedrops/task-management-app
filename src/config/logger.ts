@@ -8,7 +8,7 @@ const logger = winston.createLogger({
     transports: [],
 });
 
-export function initLogger({ env, logLevel: level }: LoggerConfig): void {
+function init({ env, logLevel: level }: LoggerConfig): void {
     logger.add(
         new winston.transports.Console({
             level,
@@ -26,9 +26,10 @@ export function initLogger({ env, logLevel: level }: LoggerConfig): void {
     }
 }
 
-export function destroy(): void {
+function destroy(): void {
     logger.clear();
     logger.close();
 }
 
-export default logger;
+// Export the logger instance along with the init and destroy methods
+export default Object.assign(logger, { init, destroy });
